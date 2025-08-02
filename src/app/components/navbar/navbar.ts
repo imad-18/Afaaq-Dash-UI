@@ -1,10 +1,11 @@
 import {Component, HostListener} from '@angular/core';
 import {NzMenuModule} from 'ng-zorro-antd/menu';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [NzMenuModule],
+  imports: [NzMenuModule, RouterLink],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css'
 })
