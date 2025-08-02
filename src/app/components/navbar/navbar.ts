@@ -1,31 +1,26 @@
 import {Component, HostListener} from '@angular/core';
 import {NzMenuModule} from 'ng-zorro-antd/menu';
-import {RouterLink} from '@angular/router';
+import {RouterLink, RouterOutlet} from '@angular/router';
+import {
+  NzContentComponent,
+  NzFooterComponent,
+  NzHeaderComponent,
+  NzLayoutComponent,
+  NzSiderComponent
+} from 'ng-zorro-antd/layout';
+import {NzIconDirective} from 'ng-zorro-antd/icon';
+import {NzBreadCrumbComponent, NzBreadCrumbItemComponent} from 'ng-zorro-antd/breadcrumb';
+import {Campaigns} from '../campaigns/campaigns';
+import {Activities} from '../activities/activities';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [NzMenuModule, RouterLink],
+  imports: [NzMenuModule, RouterLink, NzSiderComponent, NzLayoutComponent, NzHeaderComponent, NzIconDirective, NzContentComponent, NzBreadCrumbComponent, NzBreadCrumbItemComponent, NzFooterComponent, Campaigns, Activities, RouterOutlet],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css'
 })
 export class Navbar {
-  isScrolled = false;
-
-  @HostListener('window:scroll', [])
-  onWindowScroll() {
-    // Check if window is scrolled more than 50px
-    this.isScrolled = window.scrollY > 50;
-
-    // Get the navbar element
-    const navbar = document.querySelector('.navbar-container');
-
-    // Add or remove the transparent class based on scroll position
-    if (this.isScrolled) {
-      navbar?.classList.remove('transparent');
-    } else {
-      navbar?.classList.add('transparent');
-    }
-  }
+  isCollapsed = false;
 
 }
