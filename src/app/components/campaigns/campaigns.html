@@ -1,1 +1,11 @@
 <p>campaigns works!</p>
+@for (campaign of campaigns; track campaign.id){
+  <div>
+    <ul>
+      <li>{{campaign.title}}</li>
+    </ul>
+  </div>
+} @empty {
+  <h1>Aucune campaign n'est trouvé</h1>
+}
+
