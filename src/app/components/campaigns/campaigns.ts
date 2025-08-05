@@ -2,11 +2,13 @@ import {Component, inject, OnInit} from '@angular/core';
 import {NgForOf} from '@angular/common';
 import {CampaignService} from '../../services/campaign.service';
 import {Campaign} from '../../models/Campaign';
+import {NzTableComponent} from 'ng-zorro-antd/table';
 
 @Component({
   selector: 'app-campaigns',
   imports: [
-    NgForOf
+    NgForOf,
+    NzTableComponent
   ],
   templateUrl: './campaigns.html',
   styleUrl: './campaigns.css'
