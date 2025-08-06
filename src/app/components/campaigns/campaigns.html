@@ -24,8 +24,43 @@
         <td>{{campaign.id}}</td>
         <td>{{campaign.title}}</td>
         <td>{{campaign.description}}</td>
-        <td>{{campaign.imagesPath}}</td>
+        <td>
+          <ng-container *ngFor="let img of campaign.imagesPath">
+            <img [src]="img" width="60" alt="Image" style="margin-right: 5px; border-radius: 5px;" />
+          </ng-container>
+        </td>
       </tr>
     }
   </tbody>
 </nz-table>
+<!--<nz-carousel [nzEffect]="effect">
+  @for (campaign of campaigns; track campaign.id) {
+    <div nz-carousel-content>
+      <h3>{{ campaign.imagesPath }}</h3>
+    </div>
+  }
+</nz-carousel>-->
+
+<nz-row [nzGutter]="16">
+  @for (campaign of campaigns; track campaign.id) {
+    <nz-col [nzSpan]="8">
+      <nz-card [nzTitle]="campaign.title" [nzBordered]="true">
+        <nz-carousel [nzEffect]="'scrollx'" [nzDotPosition]="'bottom'">
+          @for (image of campaign.imagesPath; track image) {
+            <div nz-carousel-content>
+              <img
+                [src]="image"
+                alt="campaign image"
+                style="width: 100%; height: 200px; object-fit: cover;"
+              />
+            </div>
+          }
+        </nz-carousel>
+
+
+        <p style="margin-top: 1rem;">{{ campaign.description }}</p>
+      </nz-card>
+    </nz-col>
+  }
+</nz-row>
+
