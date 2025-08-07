@@ -41,6 +41,8 @@
   }
 </nz-carousel>-->
 
+<button nz-button nzType="primary">+ Create Campaign</button>
+
 <nz-row [nzGutter]="16">
   @for (campaign of campaigns; track campaign.id) {
     <nz-col [nzSpan]="8">
@@ -59,6 +61,8 @@
 
 
         <p style="margin-top: 1rem;">{{ campaign.description }}</p>
+        <button nz-button nzType="link" (click)="updateCampaign(campaign)">🖉 Edit</button>
+        <button nz-button nzType="link" nzDanger (click)="deleteCampaign(campaign)">🗑 Delete</button>
       </nz-card>
     </nz-col>
   }

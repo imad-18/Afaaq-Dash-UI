@@ -15,4 +15,9 @@ export class CampaignService {
     return firstValueFrom(this.http.get<Campaign[]>("http://localhost:8080/campaigns"));
   }
 
+  //delete campaign
+  deleteCampaignFct(campaign: Campaign) {
+    return firstValueFrom(this.http.delete<Campaign>(`http://localhost:8080/campaigns/${campaign.id}`));
+  }
+
 }

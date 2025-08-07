@@ -37,4 +37,17 @@ export class Campaigns implements OnInit {
     this.campaigns = await this.campaignService.getAllCampaigns();
   }
 
+  updateCampaign(campaign: Campaign) {
+
+  }
+
+  async deleteCampaign(campaign: Campaign) {
+    try {
+      await this.campaignService.deleteCampaignFct(campaign);
+      // Remove the deleted campaign from the local array
+      this.campaigns = this.campaigns.filter(c => c.id !== campaign.id);
+    } catch (error) {
+      console.error('Error deleting campaign:', error);
+    }
+  }
 }
