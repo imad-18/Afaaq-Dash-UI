@@ -3,12 +3,20 @@ import {Activity} from '../../models/Activity';
 import {NgForOf} from '@angular/common';
 import {NzTableComponent} from 'ng-zorro-antd/table';
 import {ActivityService} from '../../services/activity.service';
+import {NzCardComponent} from 'ng-zorro-antd/card';
+import {NzCarouselComponent, NzCarouselContentDirective} from 'ng-zorro-antd/carousel';
+import {NzColDirective, NzRowDirective} from 'ng-zorro-antd/grid';
 
 @Component({
   selector: 'app-activities',
   imports: [
     NgForOf,
-    NzTableComponent
+    NzTableComponent,
+    NzCardComponent,
+    NzCarouselComponent,
+    NzCarouselContentDirective,
+    NzColDirective,
+    NzRowDirective
   ],
   templateUrl: './activities.html',
   styleUrl: './activities.css'

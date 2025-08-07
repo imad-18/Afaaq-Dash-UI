@@ -54,3 +54,37 @@
     }
   </tbody>
 </nz-table>
+
+<nz-row [nzGutter]="16">
+  @for (activity of activities; track activity.id) {
+    <nz-col [nzSpan]="8">
+      <nz-card [nzTitle]="activity.title" [nzBordered]="true">
+        <nz-carousel [nzEffect]="'scrollx'" [nzDotPosition]="'bottom'">
+          @for (image of activity.albums; track image) {
+            <div nz-carousel-content>
+              <img
+                [src]="image"
+                alt="activity image"
+                style="width: 100%; height: 200px; object-fit: cover;"
+              />
+            </div>
+          }
+        </nz-carousel>
+
+
+        <p style="margin-top: 1rem;">{{ activity.description }}</p>
+        <h6>{{activity.category}}</h6>
+        <h6>{{activity.effective}}</h6>
+        <h6>{{activity.location}}</h6>
+        <h6>{{activity.feedback}}</h6>
+        <h6>{{activity.launchDate}}</h6>
+        <h6>{{activity.duration}}</h6>
+        <ul>
+          @for (goal of activity.goals; track goal){
+            <li>{{goal}}</li>
+          }
+        </ul>
+      </nz-card>
+    </nz-col>
+  }
+</nz-row>
