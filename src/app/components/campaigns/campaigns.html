@@ -46,7 +46,7 @@
 <button nz-button nzType="primary" (click)="openCreateForm()" style="align-items: center"><nz-icon nzType="plus" />Create Campaign</button>
 @if (formVisible) {
   <div>
-    <app-create-campaign>
+    <app-create-campaign (close)="closeForm()">
     </app-create-campaign>
   </div>
 }

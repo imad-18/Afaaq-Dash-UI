@@ -47,8 +47,8 @@
   <!-- Submit -->
   <nz-form-item>
     <nz-form-control [nzSpan]="14" [nzOffset]="6">
-      <button nz-button nzType="dashed">Cancel</button>
-      <button nz-button nzType="primary" [disabled]="campaignForm.invalid">
+      <button nz-button nzType="default" type="button" (click)="onCancel()">Cancel</button>
+      <button nz-button nzType="primary" type="submit" [disabled]="campaignForm.invalid">
         Create Campaign
       </button>
 

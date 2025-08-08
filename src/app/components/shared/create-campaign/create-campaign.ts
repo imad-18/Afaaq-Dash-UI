@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NzFormControlComponent, NzFormItemComponent, NzFormLabelComponent} from 'ng-zorro-antd/form';
 import {NzColDirective} from 'ng-zorro-antd/grid';
@@ -21,6 +21,8 @@ import {NzButtonComponent} from 'ng-zorro-antd/button';
   styleUrl: './create-campaign.css'
 })
 export class CreateCampaign {
+  @Output() close = new EventEmitter<void>();
+
   campaign: Campaign = {
     id: 0,
     title: '',
@@ -41,11 +43,18 @@ export class CreateCampaign {
     try {
       await this.campaignService.createCampaignFct(this.campaign);
       console.log('Campaign created successfully');
+
       // Reset form after submit
       this.campaign = { id: 0, title: '', description: '', imagesPath: [] };
       this.imagesInput = '';
     } catch (error) {
       console.error('Error creating campaign:', error);
     }
+  }
+
+
+
+  onCancel() {
+    this.close.emit(); // just tell parent to close
   }
 }
