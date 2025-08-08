@@ -51,6 +51,7 @@ export class CreateCampaign {
       // Reset form after submit
       this.campaign = { id: 0, title: '', description: '', imagesPath: [] };
       this.imagesInput = '';
+      this.close.emit();
     } catch (error) {
       console.error('Error creating campaign:', error);
     }
