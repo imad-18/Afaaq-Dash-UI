@@ -1,0 +1,58 @@
+<p>create-campaign works!</p>
+<form nz-form (ngSubmit)="onSubmit()" #campaignForm="ngForm" style="max-width: 500px; margin: auto;">
+  <!-- Title -->
+  <nz-form-item>
+    <nz-form-label [nzSpan]="6" nzFor="title" nzRequired>Title</nz-form-label>
+    <nz-form-control [nzSpan]="14">
+      <input
+        nz-input
+        id="title"
+        name="title"
+        [(ngModel)]="campaign.title"
+        required
+        placeholder="Enter campaign title"
+      />
+    </nz-form-control>
+  </nz-form-item>
+
+  <!-- Description -->
+  <nz-form-item>
+    <nz-form-label [nzSpan]="6" nzFor="description">Description</nz-form-label>
+    <nz-form-control [nzSpan]="14">
+      <textarea
+        nz-input
+        id="description"
+        name="description"
+        [(ngModel)]="campaign.description"
+        placeholder="Enter campaign description"
+        rows="3"
+      ></textarea>
+    </nz-form-control>
+  </nz-form-item>
+
+  <!-- Images Path -->
+  <nz-form-item>
+    <nz-form-label [nzSpan]="6" nzFor="imagesPath">Images (comma-separated)</nz-form-label>
+    <nz-form-control [nzSpan]="14">
+      <input
+        nz-input
+        id="imagesPath"
+        name="imagesPath"
+        [(ngModel)]="imagesInput"
+        placeholder="e.g. assets/images/img1.jpg, assets/images/img2.jpg"
+      />
+    </nz-form-control>
+  </nz-form-item>
+
+  <!-- Submit -->
+  <nz-form-item>
+    <nz-form-control [nzSpan]="14" [nzOffset]="6">
+      <button nz-button nzType="dashed">Cancel</button>
+      <button nz-button nzType="primary" [disabled]="campaignForm.invalid">
+        Create Campaign
+      </button>
+
+    </nz-form-control>
+  </nz-form-item>
+</form>
+
