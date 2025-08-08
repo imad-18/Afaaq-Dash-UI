@@ -22,6 +22,7 @@ import {NzButtonComponent} from 'ng-zorro-antd/button';
 })
 export class CreateCampaign {
   @Output() close = new EventEmitter<void>();
+  @Output() created = new EventEmitter<Campaign>();
 
   campaign: Campaign = {
     id: 0,
@@ -41,8 +42,11 @@ export class CreateCampaign {
     }
 
     try {
-      await this.campaignService.createCampaignFct(this.campaign);
-      console.log('Campaign created successfully');
+      const createdCampaign = await this.campaignService.createCampaignFct(this.campaign);
+      console.log('Campaign created successfully', createdCampaign);
+
+      // ✅ Tell parent to add this new campaign
+      this.created.emit(createdCampaign);
 
       // Reset form after submit
       this.campaign = { id: 0, title: '', description: '', imagesPath: [] };
