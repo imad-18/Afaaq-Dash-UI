@@ -23,7 +23,7 @@ export class CampaignService {
 
   //update campaign
   updateCampaignFct(campaign: Campaign) {
-    return firstValueFrom(this.http.put(`http://localhost:8080/campaigns/${campaign.id}`, campaign));
+    return firstValueFrom(this.http.put<Campaign>(`http://localhost:8080/campaigns/${campaign.id}`, campaign));
   }
 
   //create campaign
