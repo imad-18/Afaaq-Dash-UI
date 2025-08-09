@@ -95,4 +95,10 @@ export class Campaigns implements OnInit {
     this.formVisible = false;
     await this.initCampaigns(); // refresh list
   }
+
+  updateCampaignInList(updatedCampaign: Campaign) {
+    this.campaigns = this.campaigns.map(c =>
+      c.id === updatedCampaign.id ? updatedCampaign : c
+    );
+  }
 }

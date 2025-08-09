@@ -46,7 +46,11 @@
 <button nz-button nzType="primary" (click)="openCreateForm()" style="align-items: center"><nz-icon nzType="plus" />Create Campaign</button>
 @if (formVisible) {
   <div>
-    <app-create-campaign (close)="closeForm()" (created)="addCampaignToList($event)">
+    <app-create-campaign
+      [campaign]="selectedCampaign"
+      (close)="closeForm()"
+      (created)="addCampaignToList($event)"
+      (updated)="updateCampaignInList($event)">
     </app-create-campaign>
   </div>
 }
