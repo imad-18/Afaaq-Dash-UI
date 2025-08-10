@@ -10,8 +10,6 @@ import {firstValueFrom} from 'rxjs';
 export class ActivityService {
   private http = inject(HttpClient);
 
-  //private apiUrl: string = "http://localhost:8080/campaigns";
-
   // Get all activities
   getAllActivities(): Promise<Activity[]> {
     return firstValueFrom(this.http.get<Activity[]>("http://localhost:8080/activities"));
@@ -22,5 +20,14 @@ export class ActivityService {
     return firstValueFrom(this.http.delete<Activity>("http://localhost:8080/activities/" + activity.id));
   }
 
+  // Update activity
+  updateActivityFct(activity: Activity) {
+    return firstValueFrom(this.http.put<Activity>("http://localhost:8080/activities/" + activity.id, activity));
+  }
+
+  // Create activity
+  createActivityFct(activity: Activity) {
+    return firstValueFrom(this.http.post<Activity>("http://localhost:8080/activities/", activity));
+  }
 }
 

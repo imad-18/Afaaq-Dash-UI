@@ -91,11 +91,6 @@ export class Campaigns implements OnInit {
     this.campaigns = [...this.campaigns, newCampaign]; // ✅ update without refresh
   }
 
-  async onFormSaved() {
-    this.formVisible = false;
-    await this.initCampaigns(); // refresh list
-  }
-
   updateCampaignInList(updatedCampaign: Campaign) {
     this.campaigns = this.campaigns.map(c =>
       c.id === updatedCampaign.id ? updatedCampaign : c
