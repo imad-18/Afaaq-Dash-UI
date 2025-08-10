@@ -8,6 +8,9 @@ import {NzCarouselComponent, NzCarouselContentDirective} from 'ng-zorro-antd/car
 import {NzColDirective, NzRowDirective} from 'ng-zorro-antd/grid';
 import {NzButtonComponent} from 'ng-zorro-antd/button';
 import {NzIconDirective} from 'ng-zorro-antd/icon';
+import {NzWaveDirective} from 'ng-zorro-antd/core/wave';
+import {Campaign} from '../../models/Campaign';
+import {CreateUpdateActivity} from '../shared/create-update-activity/create-update-activity';
 
 @Component({
   selector: 'app-activities',
@@ -21,6 +24,8 @@ import {NzIconDirective} from 'ng-zorro-antd/icon';
     NzRowDirective,
     NzButtonComponent,
     NzIconDirective,
+    NzWaveDirective,
+    CreateUpdateActivity
   ],
   templateUrl: './activities.html',
   styleUrl: './activities.css'
@@ -47,5 +52,25 @@ export class Activities implements OnInit {
     }catch (error) {
       console.error('Error deleting activity:', error);
     }
+  }
+
+  /* ------------- Create-Update logic -----------*/
+
+
+  formVisible = false;
+  selectedActivity: Activity | null = null;
+
+  openCreateForm() {
+    this.selectedActivity = null;
+    this.formVisible = true;
+  }
+
+  openUpdateForm(activity: Activity) {
+    this.selectedActivity = activity;
+    this.formVisible = true;
+  }
+
+  closeForm() {
+    this.formVisible = false;
   }
 }

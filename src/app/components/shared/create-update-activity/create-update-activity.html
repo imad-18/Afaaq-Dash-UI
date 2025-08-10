@@ -1,0 +1,203 @@
+<form nz-form (ngSubmit)="onSubmit()" #activityForm="ngForm" style="max-width: 500px; margin: auto;">
+
+  <nz-row [nzGutter]="16">
+  <!-- Title -->
+    <nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="8" nzFor="title" nzRequired>Title</nz-form-label>
+        <nz-form-control [nzSpan]="18">
+          <input
+            nz-input
+            id="title"
+            name="title"
+            [(ngModel)]="formActivity.title"
+            required
+          />
+        </nz-form-control>
+      </nz-form-item>
+    </nz-col>
+
+    <!-- Description -->
+    <nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="8" nzFor="description">Description</nz-form-label>
+        <nz-form-control [nzSpan]="18">
+          <textarea
+            nz-input
+            id="description"
+            name="description"
+            [(ngModel)]="formActivity.description"
+            rows="3"
+          ></textarea>
+        </nz-form-control>
+      </nz-form-item>
+    </nz-col>
+  </nz-row>
+
+  <!-- Row 2 -->
+  <nz-row [nzGutter]="24">
+    <!-- Duration -->
+    <nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="8" nzFor="duration" nzRequired>Duration</nz-form-label>
+        <nz-form-control [nzSpan]="18">
+          <input
+            nz-input
+            id="duration"
+            name="duration"
+            [(ngModel)]="formActivity.duration"
+            required
+          />
+        </nz-form-control>
+      </nz-form-item>
+    </nz-col>
+
+    <!-- Launch Date -->
+    <nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="10" nzFor="LaunchDate" nzRequired>Launch Date</nz-form-label>
+        <nz-form-control [nzSpan]="18">
+          <input
+            nz-input
+            id="LaunchDate"
+            name="LaunchDate"
+            [(ngModel)]="formActivity.launchDate"
+            required
+          />
+        </nz-form-control>
+      </nz-form-item>
+    </nz-col>
+  </nz-row>
+
+  <!-- Row 3-->
+  <nz-row [nzGutter]="24">
+    <!-- Category -->
+    <nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="8" nzFor="category" nzRequired>Category</nz-form-label>
+        <nz-form-control [nzSpan]="18">
+          <input
+            nz-input
+            id="category"
+            name="category"
+            [(ngModel)]="formActivity.category"
+            required
+          />
+        </nz-form-control>
+      </nz-form-item>
+    </nz-col>
+
+    <!-- Effectf -->
+    <nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="8" nzFor="title" nzRequired>Effectif</nz-form-label>
+        <nz-form-control [nzSpan]="18">
+          <input
+            nz-input
+            id="effectif"
+            name="effectif"
+            [(ngModel)]="formActivity.effective"
+            required
+          />
+        </nz-form-control>
+      </nz-form-item>
+    </nz-col>
+  </nz-row>
+
+  <!-- Row 4-->
+  <nz-row [nzGutter]="24">
+    <!-- Location -->
+    <nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="8" nzFor="location">Location</nz-form-label>
+        <nz-form-control [nzSpan]="18">
+          <input
+            nz-input
+            id="location"
+            name="location"
+            [(ngModel)]="formActivity.location"
+          />
+        </nz-form-control>
+      </nz-form-item>
+    </nz-col>
+
+    <!-- Feedback -->
+    <nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="8" nzFor="title" nzRequired>Feedback</nz-form-label>
+        <nz-form-control [nzSpan]="18">
+          <input
+            nz-input
+            id="feedback"
+            name="feedback"
+            [(ngModel)]="formActivity.feedback"
+            required
+            placeholder="Enter Activity feedback"
+          />
+        </nz-form-control>
+      </nz-form-item>
+    </nz-col>
+  </nz-row>
+
+  <!-- Row 5-->
+  <nz-row [nzGutter]="24">
+    <!-- Images Path -->
+    <nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="18" nzFor="imagesPath">Images (comma-separated)</nz-form-label>
+        <nz-form-control [nzSpan]="18">
+          <input
+            nz-input
+            id="imagesPath"
+            name="imagesPath"
+            [(ngModel)]="albumsInput"
+            placeholder="e.g. assets/images/img1.jpg, assets/images/img2.jpg"
+          />
+        </nz-form-control>
+      </nz-form-item>
+    </nz-col>
+
+    <!-- Icon Path -->
+    <nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="8" nzFor="iconPath">Icon Path</nz-form-label>
+        <nz-form-control [nzSpan]="18">
+          <input
+            nz-input
+            id="iconPath"
+            name="iconPath"
+            [(ngModel)]="formActivity.iconPath"
+            placeholder="e.g. assets/images/icon.jpg"
+          />
+        </nz-form-control>
+      </nz-form-item>
+    </nz-col>
+  </nz-row>
+
+  <!-- Goals -->
+  <nz-col [nzSpan]="14">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="14" nzFor="imagesPath">Goals (comma-separated)</nz-form-label>
+      <nz-form-control [nzSpan]="18">
+        <input
+          nz-input
+          id="goals"
+          name="goals"
+          [(ngModel)]="gaolsInput"
+          placeholder="e.g. goal1, goal2"
+        />
+      </nz-form-control>
+    </nz-form-item>
+  </nz-col>
+
+  <!-- Submit -->
+  <nz-form-item>
+    <nz-form-control [nzSpan]="14" [nzOffset]="6">
+      <button nz-button nzType="default" type="button" (click)="onCancel()">Cancel</button>
+      <button nz-button nzType="primary" type="submit" [disabled]="activityForm.invalid">
+        {{ formActivity.id ? 'Update' : 'Create' }} Activity
+      </button>
+
+    </nz-form-control>
+  </nz-form-item>
+</form>

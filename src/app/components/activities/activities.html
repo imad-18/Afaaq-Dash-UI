@@ -1,5 +1,5 @@
 <p>activities works!</p>
-<nz-table [nzData]="activities" [nzBordered]="true" [nzSize]="'middle'">
+<!--<nz-table [nzData]="activities" [nzBordered]="true" [nzSize]="'middle'">
   <thead>
   <tr>
     <th>ID</th>
@@ -30,7 +30,7 @@
         <td>{{activity.launchDate}}</td>
         <td>{{activity.iconPath}}</td>
 
-        <!-- Display goals -->
+        &lt;!&ndash; Display goals &ndash;&gt;
         <td>
           <ul style="padding-left: 16px; margin: 0;">
             @for (goal of activity.goals; track goal) {
@@ -39,7 +39,7 @@
           </ul>
         </td>
 
-        <!-- Display album images -->
+        &lt;!&ndash; Display album images &ndash;&gt;
         <td>
           @for (img of activity.albums; track img) {
             <img
@@ -53,7 +53,19 @@
       </tr>
     }
   </tbody>
-</nz-table>
+</nz-table>-->
+<!-- ********************+ -->
+
+
+<button nz-button nzType="primary" (click)="openCreateForm()" style="align-items: center"><nz-icon nzType="plus" />Create Activity</button>
+@if (formVisible) {
+  <div>
+    <app-create-update-activity
+      [activity]="selectedActivity"
+      (close)="closeForm()">
+    </app-create-update-activity>
+  </div>
+}
 
 <nz-row [nzGutter]="16">
   @for (activity of activities; track activity.id) {
