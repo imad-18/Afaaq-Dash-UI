@@ -84,6 +84,9 @@
             <li>{{goal}}</li>
           }
         </ul>
+
+        <button nz-button nzType="link"><nz-icon nzType="edit"/> Edit</button>
+        <button nz-button nzType="link" nzDanger (click)="deleteActivity(activity)"><nz-icon nzType="delete" /> Delete</button>
       </nz-card>
     </nz-col>
   }

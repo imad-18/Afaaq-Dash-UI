@@ -6,6 +6,8 @@ import {ActivityService} from '../../services/activity.service';
 import {NzCardComponent} from 'ng-zorro-antd/card';
 import {NzCarouselComponent, NzCarouselContentDirective} from 'ng-zorro-antd/carousel';
 import {NzColDirective, NzRowDirective} from 'ng-zorro-antd/grid';
+import {NzButtonComponent} from 'ng-zorro-antd/button';
+import {NzIconDirective} from 'ng-zorro-antd/icon';
 
 @Component({
   selector: 'app-activities',
@@ -16,7 +18,9 @@ import {NzColDirective, NzRowDirective} from 'ng-zorro-antd/grid';
     NzCarouselComponent,
     NzCarouselContentDirective,
     NzColDirective,
-    NzRowDirective
+    NzRowDirective,
+    NzButtonComponent,
+    NzIconDirective,
   ],
   templateUrl: './activities.html',
   styleUrl: './activities.css'
@@ -33,6 +37,15 @@ export class Activities implements OnInit {
 
   private async initActivities() : Promise<void> {
     this.activities = await this.activityService.getAllActivities()
+  }
 
+  // Call deleteActivity fct from the service
+  async deleteActivity(activity : Activity) : Promise<void> {
+    try {
+      await this.activityService.deleteActivityFct(activity);
+      this.activities = this.activities.filter(a => a.id !== activity.id);
+    }catch (error) {
+      console.error('Error deleting activity:', error);
+    }
   }
 }
