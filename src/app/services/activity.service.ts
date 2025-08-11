@@ -27,7 +27,7 @@ export class ActivityService {
 
   // Create activity
   createActivityFct(activity: Activity) {
-    return firstValueFrom(this.http.post<Activity>("http://localhost:8080/activities/", activity));
+    return firstValueFrom(this.http.post<Activity>("http://localhost:8080/activities", activity));
   }
 }
 
