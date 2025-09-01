@@ -75,8 +75,8 @@ export class Activities implements OnInit {
   }
 
   updateActivityInList(updatedActivity: Activity) {
-    this.activities = this.activities.map(c =>
-      c.id === updatedActivity.id ? updatedActivity : c
+    this.activities = this.activities.map(a =>
+      a.id === updatedActivity.id ? updatedActivity : a
     );
   }
 }

@@ -10,7 +10,9 @@
   justify-content: center;
 }
 .logo img{
-  width: 40px;
+  margin-top: 70px;
+  width: 100px;
+  position: fixed;
 }
 
 .myProfile{
@@ -44,5 +46,5 @@ nz-footer {
 }
 
 .navItems{
-  margin-top: 50px;
+  margin-top: 100px;
 }
