@@ -1,1 +1,36 @@
-<p>statistics works!</p>
+<!-- First dropdown: choose type -->
+<div nz-flex nzGap="small" nzWrap="wrap">
+  <button nz-button nz-dropdown [nzDropdownMenu]="menu">
+    Select Data
+    <nz-icon nzType="down"></nz-icon>
+  </button>
+
+  <nz-dropdown-menu #menu="nzDropdownMenu">
+    <ul nz-menu>
+      <li nz-menu-item (click)="onSelectType('campaigns')">Campaigns</li>
+      <li nz-menu-item (click)="onSelectType('activities')">Activities</li>
+    </ul>
+  </nz-dropdown-menu>
+
+  <!-- Second dropdown: shows titles depending on selected type -->
+  @if (selectedType){
+    <button nz-button nz-dropdown [nzDropdownMenu]="submenu">
+      Select {{ selectedType }}
+      <nz-icon nzType="down"></nz-icon>
+    </button>
+  }
+
+  <nz-dropdown-menu #submenu="nzDropdownMenu">
+    <ul nz-menu>
+      @for (item of filteredList; track item.id){
+        <li nz-menu-item>{{item.title}}</li>
+      }
+    </ul>
+  </nz-dropdown-menu>
+
+</div>
+
+
+
+
+
