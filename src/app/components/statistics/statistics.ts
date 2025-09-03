@@ -10,11 +10,13 @@ import {Activity} from '../../models/Activity';
 import {ActivityService} from '../../services/activity.service';
 import {NzTabComponent, NzTabsComponent, NzTabsModule} from 'ng-zorro-antd/tabs';
 import {NzTableComponent} from 'ng-zorro-antd/table';
+import {FormArray, FormBuilder, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {of} from 'rxjs';
 
 @Component({
   selector: 'app-statistics',
   imports: [
-    NzButtonModule, NzDropDownModule, NzFlexModule, NzIconModule, NzSpaceModule, NzTabsModule, NzTableComponent
+    NzButtonModule, NzDropDownModule, NzFlexModule, NzIconModule, NzSpaceModule, NzTabsModule, NzTableComponent, ReactiveFormsModule
   ],
   templateUrl: './statistics.html',
   styleUrl: './statistics.css'
@@ -26,10 +28,15 @@ export class Statistics implements OnInit {
 
   private campaignService = inject(CampaignService);
   private activityService = inject(ActivityService);
+  private fb = inject(FormBuilder);
 
   campaigns!: Campaign[];
   activities!: Activity[];
   filteredList: any[] = [];
+
+  isVisible: boolean = false;
+
+  statisticForm!: FormGroup;
 
   selectedType: 'campaigns' | 'activities' | null = null;
 
@@ -41,6 +48,11 @@ export class Statistics implements OnInit {
 
   ngOnInit() {
     this.loadData();
+
+    // ✅ Initialize form once
+    this.statisticForm = this.fb.group({
+      attributes: this.fb.array([]) // empty initially
+    });
   }
 
   loadData() {
@@ -69,4 +81,53 @@ export class Statistics implements OnInit {
     this.hasStatistics = item.statistics && item.statistics.length > 0;
   }
 
+  openStatisticForm() {
+    this.isVisible = true;
+  }
+
+
+
+  // ✅ Getter for attributes array
+  get attributes(): FormArray {
+    return this.statisticForm.get('attributes') as FormArray;
+  }
+
+  // ✅ Add new attribute row
+  addAttribute(): void {
+    const attrGroup = this.fb.group({
+      attributeName: [''],
+      attributeValue: ['']
+    });
+    this.attributes.push(attrGroup);
+  }
+
+  // ✅ Remove attribute row
+  removeAttribute(index: number): void {
+    this.attributes.removeAt(index);
+  }
+
+  // ✅ Handle form submission
+  onSubmit(): void {
+    if (this.statisticForm.valid) {
+      console.log('Saving statistic for:', this.selectedItem);
+      console.log('Attributes:', this.statisticForm.value.attributes);
+
+      // Example payload to backend
+      const payload = {
+        itemId: this.selectedItem.id,
+        attributes: this.statisticForm.value.attributes
+      };
+
+      // TODO: call your statisticsService.saveStatistic(payload)
+      this.isVisible = false; // hide form after saving
+      this.statisticForm.reset(); // clear the form
+      this.attributes.clear();    // clear form array
+    }
+  }
+
+  protected readonly of = of;
+
+  cancelStatisticForm() {
+    this.isVisible = false;
+  }
 }
