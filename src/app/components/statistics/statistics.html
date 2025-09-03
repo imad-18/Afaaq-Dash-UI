@@ -1,34 +1,79 @@
 <!-- First dropdown: choose type -->
-<div nz-flex nzGap="small" nzWrap="wrap">
-  <button nz-button nz-dropdown [nzDropdownMenu]="menu">
-    Select Data
-    <nz-icon nzType="down"></nz-icon>
-  </button>
+<nz-tabs>
+  <!--Tab 1-->
+  <nz-tab nzTitle="Statistics">
+    Content of Tab Pane 1
+  </nz-tab>
 
-  <nz-dropdown-menu #menu="nzDropdownMenu">
-    <ul nz-menu>
-      <li nz-menu-item (click)="onSelectType('campaigns')">Campaigns</li>
-      <li nz-menu-item (click)="onSelectType('activities')">Activities</li>
-    </ul>
-  </nz-dropdown-menu>
-
-  <!-- Second dropdown: shows titles depending on selected type -->
-  @if (selectedType){
-    <button nz-button nz-dropdown [nzDropdownMenu]="submenu">
-      Select {{ selectedType }}
+  <!-- Tab 2-->
+  <nz-tab nzTitle="Campaigns">
+    <button nz-button nz-dropdown [nzDropdownMenu]="campaignsMenu">
+      Select Campaign
       <nz-icon nzType="down"></nz-icon>
     </button>
-  }
+    <!-- 2-b) Display the campaigns/activities titles-->
+    <nz-dropdown-menu #campaignsMenu="nzDropdownMenu">
+      <ul nz-menu>
+        @for (item of campaigns; track item.id){
+          <li nz-menu-item (click)="onSelectedItem(item)">{{item.title}}</li>
+        }
+      </ul>
+    </nz-dropdown-menu>
 
-  <nz-dropdown-menu #submenu="nzDropdownMenu">
-    <ul nz-menu>
-      @for (item of filteredList; track item.id){
-        <li nz-menu-item>{{item.title}}</li>
-      }
-    </ul>
-  </nz-dropdown-menu>
+    <!--Table of campaigns-->
+    @if (selectedItem)
+    {
+    <div style="margin-top: 30px;">
+      <nz-table [nzData]="campaigns" [nzBordered]="true" [nzSize]="'small'" style="max-width: 60%">
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>Title</th>
+          <th>Description</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr>
+              <td>{{selectedItem.id}}</td>
+              <td>{{selectedItem.title}}</td>
+              <td>{{selectedItem.description}}</td>
+            </tr>
+        </tbody>
+      </nz-table>
+    </div>
+    }
 
-</div>
+  </nz-tab>
+
+  <!-- Tab 3 -->
+  <nz-tab nzTitle="Activities">
+    <button nz-button nz-dropdown [nzDropdownMenu]="acitivitiesMenu">
+      Select Activity
+      <nz-icon nzType="down"></nz-icon>
+    </button>
+    <!-- 2-b) Display the campaigns/activities titles-->
+    <nz-dropdown-menu #acitivitiesMenu="nzDropdownMenu">
+      <ul nz-menu>
+        @for (activity of activities; track activity.id){
+          <li nz-menu-item >{{activity.title}}</li>
+        }
+      </ul>
+    </nz-dropdown-menu>
+  </nz-tab>
+</nz-tabs>
+
+<!-- Dropdown for items -->
+<!--<nz-dropdown-menu #itemMenu="nzDropdownMenu">
+  <ul nz-menu>
+    @for (item of filteredList; track item.id) {
+      <li nz-menu-item (click)="onSelectedItem(item)">
+        {{ item.title }}
+      </li>
+    }
+  </ul>
+</nz-dropdown-menu>-->
+
+
 
 
 
