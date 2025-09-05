@@ -12,6 +12,7 @@ import {NzTabComponent, NzTabsComponent, NzTabsModule} from 'ng-zorro-antd/tabs'
 import {NzTableComponent} from 'ng-zorro-antd/table';
 import {FormArray, FormBuilder, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {of} from 'rxjs';
+import {StatisticService} from '../../services/statistic.service';
 
 @Component({
   selector: 'app-statistics',
@@ -28,6 +29,7 @@ export class Statistics implements OnInit {
 
   private campaignService = inject(CampaignService);
   private activityService = inject(ActivityService);
+  private statisticService = inject(StatisticService);
   private fb = inject(FormBuilder);
 
   campaigns!: Campaign[];
@@ -50,8 +52,12 @@ export class Statistics implements OnInit {
     this.loadData();
 
     // ✅ Initialize form once
-    this.statisticForm = this.fb.group({
+    /*this.statisticForm = this.fb.group({
       attributes: this.fb.array([]) // empty initially
+    });*/
+    this.statisticForm = this.fb.group({
+      yearEdition: [''],        // Date input
+      attributes: this.fb.array([]) // Dynamic attributes array
     });
   }
 
@@ -107,7 +113,7 @@ export class Statistics implements OnInit {
   }
 
   // ✅ Handle form submission
-  onSubmit(): void {
+ /* onSubmit(): void {
     if (this.statisticForm.valid) {
       console.log('Saving statistic for:', this.selectedItem);
       console.log('Attributes:', this.statisticForm.value.attributes);
@@ -123,7 +129,31 @@ export class Statistics implements OnInit {
       this.statisticForm.reset(); // clear the form
       this.attributes.clear();    // clear form array
     }
+  }*/
+  onSubmit(): void {
+    if (this.statisticForm.valid && this.selectedItem) {
+      const payload = {
+        yearEdition: this.statisticForm.value.yearEdition,
+        compaign: { id: this.selectedItem.id },  // link to campaign
+        attributes: this.statisticForm.value.attributes
+      };
+
+      console.log('Payload to backend:', payload);
+
+      this.statisticService.createStatisticFct(payload)
+        .then((res) => {
+          console.log('Statistic saved successfully:', res);
+          this.isVisible = false;
+          this.statisticForm.reset();
+          this.attributes.clear();
+        })
+        .catch((err) => {
+          console.error('Error saving statistic:', err);
+        });
+
+    }
   }
+
 
   protected readonly of = of;
 
