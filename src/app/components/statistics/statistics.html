@@ -80,6 +80,7 @@
             <th>Statistic ID</th>
             <th>Year of Edition</th>
             <th>Attributes</th>
+            <th></th>
           </tr>
           </thead>
           <tbody>
@@ -94,6 +95,11 @@
                         <li>{{ attr.attributeName }} : {{ attr.attributeValue }}</li>
                       }
                     </ul>
+                  </td>
+                  <td>
+                    <button nz-button nzType="default" nzDanger (click)="deleteStatistic(stat.id)" class="remove-stat-btn">
+                      Remove
+                    </button>
                   </td>
                 </tr>
               }

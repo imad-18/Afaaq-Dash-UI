@@ -295,3 +295,17 @@
   transform: translateY(0) !important;
   box-shadow: 0 2px 8px rgba(52, 152, 219, 0.3) !important;
 }
+
+/* remove-stat-btn*/
+.remove-stat-btn{
+  padding: 6px 14px;
+  border-radius: 6px;
+  background: #f3f3f3;
+  transition: background 0.2s ease;
+}
+
+.remove-stat-btn:hover {
+  background: #e1e1e1;
+  color: #e35858;
+  border-color: #e35858;
+}

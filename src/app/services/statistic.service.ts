@@ -20,4 +20,9 @@ export class StatisticService {
     return firstValueFrom(this.http.post<Statistic>("http://localhost:8080/statistics", statistic));
   }
 
+  //delete statistic
+  deleteStatistic(id: number | undefined): Promise<void> {
+    return firstValueFrom(this.http.delete<void>(`http://localhost:8080/statistics/${id}`));
+  }
+
 }

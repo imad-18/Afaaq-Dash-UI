@@ -154,4 +154,16 @@ export class Statistics implements OnInit {
 
     this.statistics = [...this.statistics, newStat];
   }
+
+  /*delete stat by id method*/
+  deleteStatistic(id: number | undefined) {
+    if (confirm("Are you sure you want to delete this statistic?")) {
+      this.statisticService.deleteStatistic(id).then(() => {
+        // filter out deleted stat from the list -to auto update the stat table without refresh-
+        this.statistics = this.statistics.filter(stat => stat.id !== id);
+      }).catch(err => {
+        console.error("Error deleting statistic:", err);
+      });
+    }
+  }
 }
