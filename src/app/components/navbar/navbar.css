@@ -12,7 +12,6 @@
 .logo img{
   margin-top: 70px;
   width: 100px;
-  position: fixed;
 }
 
 .myProfile{
@@ -47,4 +46,30 @@ nz-footer {
 
 .navItems{
   margin-top: 100px;
+}
+/*--------*/
+.layout {
+  min-height: 100vh; /* full height */
+}
+
+.fixed-sider {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  height: 100vh;
+  z-index: 1000;
+}
+
+.main-layout {
+  margin-left: 200px; /* same as sider width */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.inner-content {
+  padding: 24px;
+  overflow-y: auto; /* scroll only content */
+  flex: 1;          /* take remaining space */
 }
