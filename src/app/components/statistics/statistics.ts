@@ -1,4 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, EventEmitter, inject, OnInit, Output} from '@angular/core';
 import {NzIconModule} from 'ng-zorro-antd/icon';
 import {NzDropDownModule} from 'ng-zorro-antd/dropdown';
 import {CampaignService} from '../../services/campaign.service';
@@ -25,9 +25,6 @@ import {DatePipe} from '@angular/common';
   styleUrl: './statistics.css'
 })
 export class Statistics implements OnInit {
-  log(): void {
-    console.log('click dropdown button');
-  }
 
   private campaignService = inject(CampaignService);
   private activityService = inject(ActivityService);
@@ -37,13 +34,10 @@ export class Statistics implements OnInit {
   campaigns!: Campaign[];
   activities!: Activity[];
   statistics!: Statistic[];
-  filteredList: any[] = [];
 
   isVisible: boolean = false;
 
   statisticForm!: FormGroup;
-
-  selectedType: 'campaigns' | 'activities' | null = null;
 
   // step 2: Track which item is selected (campaign or activity)
   selectedItem: any = null;
@@ -55,10 +49,6 @@ export class Statistics implements OnInit {
     this.loadData();
     this.loadStatistics();
 
-    // ✅ Initialize form once
-    /*this.statisticForm = this.fb.group({
-      attributes: this.fb.array([]) // empty initially
-    });*/
     this.statisticForm = this.fb.group({
       yearEdition: [''],        // Date input
       attributes: this.fb.array([]) // Dynamic attributes array
@@ -80,13 +70,6 @@ export class Statistics implements OnInit {
     });
   }
 
-  /*onSelectType(type: 'campaigns' | 'activities') {
-    this.selectedType = type;
-    this.filteredList = type === 'campaigns' ? this.campaigns : this.activities;
-
-    this.selectedItem = null;   // reset when switching type
-    this.hasStatistics = false; // reset as well
-  }*/
 
   onSelectedItem(item: any) {
     this.selectedItem = item;
@@ -122,23 +105,6 @@ export class Statistics implements OnInit {
   }
 
   // ✅ Handle form submission
- /* onSubmit(): void {
-    if (this.statisticForm.valid) {
-      console.log('Saving statistic for:', this.selectedItem);
-      console.log('Attributes:', this.statisticForm.value.attributes);
-
-      // Example payload to backend
-      const payload = {
-        itemId: this.selectedItem.id,
-        attributes: this.statisticForm.value.attributes
-      };
-
-      // TODO: call your statisticsService.saveStatistic(payload)
-      this.isVisible = false; // hide form after saving
-      this.statisticForm.reset(); // clear the form
-      this.attributes.clear();    // clear form array
-    }
-  }*/
   onSubmit(): void {
     if (this.statisticForm.valid && this.selectedItem) {
       const payload = {
@@ -147,11 +113,16 @@ export class Statistics implements OnInit {
         attributes: this.statisticForm.value.attributes
       };
 
-      console.log('Payload to backend:', payload);
+      //console.log('Payload to backend:', payload);
 
       this.statisticService.createStatisticFct(payload)
         .then((res) => {
-          console.log('Statistic saved successfully:', res);
+          //console.log('Statistic saved successfully:', res);
+
+          // update local list immediately
+          this.addStatisticToList(res);
+
+          // reset or hide form
           this.isVisible = false;
           this.statisticForm.reset();
           this.attributes.clear();
@@ -168,11 +139,19 @@ export class Statistics implements OnInit {
   }
 
   /* ----- Tab1 ----- */
-  getStatisticsForCampaign(campaignId: number) {
+  /*getStatisticsForCampaign(campaignId: number) {
     if (!this.statistics) return []; // nothing loaded yet
     return this.statistics.filter(s => s.compaignId === campaignId);
+  }*/
+
+
+  /*update the stat tables (in tabs 1 & 2) without refresh*/
+  addStatisticToList(newStat: Statistic) {
+    //Since I already know the campaign (from selectedItem),
+    // I can manually inject 'compaignId' and 'compaignTitle':
+    newStat.compaignId = this.selectedItem.id;
+    newStat.compaignTitle = this.selectedItem.title;
+
+    this.statistics = [...this.statistics, newStat];
   }
-
-
-
 }

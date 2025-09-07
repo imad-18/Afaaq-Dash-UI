@@ -55,6 +55,7 @@
     @if (selectedItem)
     {
       <div style="margin-top: 30px; display: flex; gap: 20px; align-items: flex-start">
+        <!--1st table: campaign table-->
         <nz-table [nzBordered]="true" [nzSize]="'small'" style="max-width: 60%" class="statistic-table">
           <thead>
             <tr>
@@ -69,6 +70,34 @@
                 <td>{{selectedItem.title}}</td>
                 <td>{{selectedItem.description}}</td>
               </tr>
+          </tbody>
+        </nz-table>
+
+        <!--2nd table: Statstic Tab-->
+        <nz-table [nzBordered]="true" [nzSize]="'small'" style="max-width: 60%" class="statistic-table">
+          <thead>
+          <tr>
+            <th>Statistic ID</th>
+            <th>Year of Edition</th>
+            <th>Attributes</th>
+          </tr>
+          </thead>
+          <tbody>
+            @for (stat of statistics; track stat.id) {
+              @if (stat.compaignId == selectedItem.id){
+                <tr>
+                  <td>{{ stat.id }}</td>
+                  <td>{{ stat.yearEdition | date:'yyyy-MM-dd' }}</td>
+                  <td>
+                    <ul style="margin: 0; padding-left: 16px;">
+                      @for (attr of stat.attributes; track attr.id) {
+                        <li>{{ attr.attributeName }} : {{ attr.attributeValue }}</li>
+                      }
+                    </ul>
+                  </td>
+                </tr>
+              }
+            }
           </tbody>
         </nz-table>
       </div>
