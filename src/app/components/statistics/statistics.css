@@ -1,0 +1,297 @@
+/* ----- Tab 1 -----*/
+.statistic-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(52, 152, 219, 0.15);
+  font-size: 14px;
+}
+
+/* Header Styling */
+.statistic-table thead {
+  background: linear-gradient(135deg, #3498db, #2980b9);
+  position: relative;
+}
+
+.statistic-table thead::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #74b9ff, #0984e3);
+}
+
+.statistic-table th {
+  padding: 18px 16px;
+  color: white;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 12px;
+  border: none;
+  position: relative;
+  background: transparent;
+}
+
+.statistic-table th:first-child {
+  border-top-left-radius: 12px;
+}
+
+.statistic-table th:last-child {
+  border-top-right-radius: 12px;
+}
+
+/* Add subtle separators between header columns */
+.statistic-table th:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 25%;
+  height: 50%;
+  width: 1px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Body Row Styling */
+.statistic-table tbody tr {
+  background: white;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-bottom: 2px solid #f8fafc;
+}
+
+.statistic-table tbody tr:nth-child(even) {
+  background: linear-gradient(135deg, #f7f9fc, #eef4f7);
+}
+
+.statistic-table tbody tr:hover {
+  background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(33, 150, 243, 0.15);
+}
+
+.statistic-table td {
+  padding: 16px;
+  border: none;
+  color: #2c3e50;
+  font-weight: 500;
+  vertical-align: top;
+  position: relative;
+}
+
+/* Add vertical separators between columns */
+.statistic-table td:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 10%;
+  height: 80%;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, #e1f5fe, transparent);
+}
+
+/* Special styling for Campaign ID column */
+.statistic-table td:first-child {
+  font-weight: 700;
+  color: #1976d2;
+  background: linear-gradient(135deg, rgba(33, 150, 243, 0.05), rgba(33, 150, 243, 0.02));
+  border-left: 3px solid #2196f3;
+}
+
+/* Campaign Title styling */
+.statistic-table td:nth-child(2) {
+  font-weight: 600;
+  color: #37474f;
+}
+
+/* Statistics ID styling */
+.statistic-table td:nth-child(3) {
+  color: #5e35b1;
+  font-family: 'Monaco', 'Menlo', monospace;
+  background: rgba(156, 39, 176, 0.05);
+}
+
+/* Date styling */
+.statistic-table td:nth-child(4) {
+  color: #388e3c;
+  font-family: 'Monaco', 'Menlo', monospace;
+  background: rgba(76, 175, 80, 0.05);
+}
+
+/* Attributes column styling */
+.statistic-table td:last-child {
+  background: linear-gradient(135deg, rgba(255, 152, 0, 0.05), rgba(255, 193, 7, 0.02));
+}
+
+/* Attributes list styling */
+.attributes-list {
+  margin: 0;
+  padding-left: 16px;
+  list-style: none;
+  position: relative;
+}
+
+.attributes-list li {
+  position: relative;
+  padding: 6px 0;
+  padding-left: 20px;
+  color: #455a64;
+  font-size: 13px;
+  line-height: 1.4;
+  border-bottom: 1px solid rgba(33, 150, 243, 0.1);
+}
+
+.attributes-list li:last-child {
+  border-bottom: none;
+}
+
+.attributes-list li::before {
+  content: '◉';
+  position: absolute;
+  left: 0;
+  color: #42a5f5;
+  font-size: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.attributes-list li strong {
+  color: #1976d2;
+  font-weight: 600;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .table-container {
+    padding: 16px;
+    max-width: 100%;
+  }
+
+  .statistic-table {
+    font-size: 12px;
+  }
+
+  .statistic-table th,
+  .statistic-table td {
+    padding: 12px 8px;
+  }
+}
+
+@media (max-width: 768px) {
+  .statistic-table th,
+  .statistic-table td {
+    padding: 10px 6px;
+    font-size: 11px;
+  }
+
+  .attributes-list li {
+    font-size: 11px;
+    padding: 4px 0 4px 16px;
+  }
+}
+
+/* Loading animation for demonstration */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.statistic-table tbody tr {
+  animation: slideInUp 0.6s ease forwards;
+}
+
+.statistic-table tbody tr:nth-child(1) { animation-delay: 0.1s; }
+.statistic-table tbody tr:nth-child(2) { animation-delay: 0.2s; }
+.statistic-table tbody tr:nth-child(3) { animation-delay: 0.3s; }
+.statistic-table tbody tr:nth-child(4) { animation-delay: 0.4s; }
+
+/* Custom scrollbar for overflow */
+.table-container::-webkit-scrollbar {
+  height: 8px;
+}
+
+.table-container::-webkit-scrollbar-track {
+  background: #f1f3f4;
+  border-radius: 4px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #42a5f5, #2196f3);
+  border-radius: 4px;
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(45deg, #1976d2, #1565c0);
+}
+
+/* ----- Tab 2 -----*/
+.editionDate-input{
+  margin-bottom: 15px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+.attribute-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;          /* spacing between elements */
+  margin-bottom: 12px;
+}
+
+.attribute-row input {
+  flex: 1;            /* equal width */
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+.attribute-row button {
+  padding: 6px 14px;
+  border-radius: 6px;
+  background: #f3f3f3;
+  transition: background 0.2s ease;
+}
+
+.attribute-row button:hover {
+  background: #e1e1e1;
+  color: #e35858;
+  border-color: #e35858;
+}
+
+/* dsf*/
+/* Modern Button Styling */
+.ant-btn-primary {
+  margin-top: 20px;
+  background-color: #3498DBFF !important;
+  border: none !important;
+  border-radius: 1px !important;
+  padding: 10px 20px !important;
+  font-weight: 600 !important;
+  font-size: 12px !important;
+  letter-spacing: 0.5px !important;
+  text-transform: uppercase !important;
+  box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3) !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.ant-btn-primary:hover {
+  background: linear-gradient(135deg, #2980b9, #1f4e79) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4) !important;
+}
+
+.ant-btn-primary:active {
+  transform: translateY(0) !important;
+  box-shadow: 0 2px 8px rgba(52, 152, 219, 0.3) !important;
+}

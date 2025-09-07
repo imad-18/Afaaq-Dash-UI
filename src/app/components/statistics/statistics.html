@@ -3,15 +3,15 @@
   <!--Tab 1-->
   <nz-tab nzTitle="Statistics">
     <div style="margin-top: 30px;">
-      <nz-table [nzBordered]="true" [nzSize]="'small'" style="max-width: 90%">
+      <nz-table [nzBordered]="true" [nzSize]="'small'" style="max-width: 90%" class="statistic-table">
         <thead>
-        <tr>
-          <th>Campaign ID</th>
-          <th>Campaign Title</th>
-          <th>Statistic Id</th>
-          <th>Year Edition</th>
-          <th>Attributes</th>
-        </tr>
+          <tr>
+            <th>Campaign ID</th>
+            <th>Campaign Title</th>
+            <th>Statistic Id</th>
+            <th>Year Edition</th>
+            <th>Attributes</th>
+          </tr>
         </thead>
         <tbody>
             @for (stat of statistics; track stat.id) {
@@ -51,17 +51,17 @@
       </ul>
     </nz-dropdown-menu>
 
-    <!--Table of campaigns-->
+    <!--Display the table of the selected camapaign + the 'add/create stat' btn-->
     @if (selectedItem)
     {
-      <div style="margin-top: 30px;">
-        <nz-table [nzData]="campaigns" [nzBordered]="true" [nzSize]="'small'" style="max-width: 60%">
+      <div style="margin-top: 30px; display: flex; gap: 20px; align-items: flex-start">
+        <nz-table [nzBordered]="true" [nzSize]="'small'" style="max-width: 60%" class="statistic-table">
           <thead>
-          <tr>
-            <th>ID</th>
-            <th>Title</th>
-            <th>Description</th>
-          </tr>
+            <tr>
+              <th>Campaign ID</th>
+              <th>Campaign Title</th>
+              <th>Campaign Description</th>
+            </tr>
           </thead>
           <tbody>
               <tr>
@@ -73,27 +73,22 @@
         </nz-table>
       </div>
 
-      @if (hasStatistics){
-
-      }
-
-      <button nz-button nzType="primary" (click)="openStatisticForm()">
+      <button nz-button nzType="primary" (click)="openStatisticForm()" class="ant-btn-primary">
         {{hasStatistics? 'Add': 'Create'}} new statistic
       </button>
 
-      <!-- Case 2: If no statistics exist, show dynamic form -->
-      @if (isVisible && !hasStatistics){
+      <!-- Case 1: Show -the same- dynamic form weither a previous stat exists or not -->
+      @if (isVisible){
         <div style="margin-top: 20px;">
-
           <form [formGroup]="statisticForm" (ngSubmit)="onSubmit()">
 
-            <input type="date" formControlName="yearEdition" />
+            <input type="date" formControlName="yearEdition" class="editionDate-input"/>
 
             <div formArrayName="attributes">
               @for (attr of attributes.controls; track $index) {
                 <div [formGroupName]="$index" class="attribute-row">
-                  <input nz-input placeholder="Attribute Name" formControlName="attributeName" style="width: 40%; margin-right: 10px;" />
-                  <input nz-input placeholder="Attribute Value" formControlName="attributeValue" style="width: 40%; margin-right: 10px;" />
+                  <input nz-input placeholder="Attribute Name" formControlName="attributeName"/>
+                  <input nz-input placeholder="Attribute Value" formControlName="attributeValue"/>
                   <button nz-button nzType="default" (click)="removeAttribute($index)" type="button">Remove</button>
                 </div>
               }
@@ -106,12 +101,11 @@
               <button nz-button nzType="default" type="button" (click)="cancelStatisticForm()" style="margin-left: 20px">Cancel</button>
             </div>
           </form>
-
         </div>
       }
     }
-
   </nz-tab>
+
 
   <!-- Tab 3 -->
   <nz-tab nzTitle="Activities">
