@@ -2,8 +2,39 @@
 <nz-tabs>
   <!--Tab 1-->
   <nz-tab nzTitle="Statistics">
-    Content of Tab Pane 1
+    <div style="margin-top: 30px;">
+      <nz-table [nzBordered]="true" [nzSize]="'small'" style="max-width: 90%">
+        <thead>
+        <tr>
+          <th>Campaign ID</th>
+          <th>Campaign Title</th>
+          <th>Statistic Id</th>
+          <th>Year Edition</th>
+          <th>Attributes</th>
+        </tr>
+        </thead>
+        <tbody>
+            @for (stat of statistics; track stat.id) {
+              <tr>
+                <td>{{ stat.compaignId }}</td>
+                <td>{{ stat.compaignTitle }}</td>
+                <td>{{ stat.id }}</td>
+                <td>{{ stat.yearEdition | date:'yyyy-MM-dd' }}</td>
+                <td>
+                  <ul style="margin: 0; padding-left: 16px;">
+                    @for (attr of stat.attributes; track attr.id) {
+                      <li>{{ attr.attributeName }} : {{ attr.attributeValue }}</li>
+                    }
+                  </ul>
+                </td>
+              </tr>
+            }
+        </tbody>
+      </nz-table>
+    </div>
+
   </nz-tab>
+
 
   <!-- Tab 2-->
   <nz-tab nzTitle="Campaigns">
@@ -23,24 +54,28 @@
     <!--Table of campaigns-->
     @if (selectedItem)
     {
-    <div style="margin-top: 30px;">
-      <nz-table [nzData]="campaigns" [nzBordered]="true" [nzSize]="'small'" style="max-width: 60%">
-        <thead>
-        <tr>
-          <th>ID</th>
-          <th>Title</th>
-          <th>Description</th>
-        </tr>
-        </thead>
-        <tbody>
-            <tr>
-              <td>{{selectedItem.id}}</td>
-              <td>{{selectedItem.title}}</td>
-              <td>{{selectedItem.description}}</td>
-            </tr>
-        </tbody>
-      </nz-table>
-    </div>
+      <div style="margin-top: 30px;">
+        <nz-table [nzData]="campaigns" [nzBordered]="true" [nzSize]="'small'" style="max-width: 60%">
+          <thead>
+          <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Description</th>
+          </tr>
+          </thead>
+          <tbody>
+              <tr>
+                <td>{{selectedItem.id}}</td>
+                <td>{{selectedItem.title}}</td>
+                <td>{{selectedItem.description}}</td>
+              </tr>
+          </tbody>
+        </nz-table>
+      </div>
+
+      @if (hasStatistics){
+
+      }
 
       <button nz-button nzType="primary" (click)="openStatisticForm()">
         {{hasStatistics? 'Add': 'Create'}} new statistic
@@ -68,7 +103,7 @@
 
             <div style="margin-top: 15px;">
               <button nz-button nzType="primary" htmlType="submit">Save Statistic</button>
-              <button nz-button nzType="default" (click)="cancelStatisticForm()" style="margin-left: 20px">Cancel</button>
+              <button nz-button nzType="default" type="button" (click)="cancelStatisticForm()" style="margin-left: 20px">Cancel</button>
             </div>
           </form>
 
@@ -94,17 +129,6 @@
     </nz-dropdown-menu>
   </nz-tab>
 </nz-tabs>
-
-<!-- Dropdown for items -->
-<!--<nz-dropdown-menu #itemMenu="nzDropdownMenu">
-  <ul nz-menu>
-    @for (item of filteredList; track item.id) {
-      <li nz-menu-item (click)="onSelectedItem(item)">
-        {{ item.title }}
-      </li>
-    }
-  </ul>
-</nz-dropdown-menu>-->
 
 
 

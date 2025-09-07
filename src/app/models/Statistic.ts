@@ -4,6 +4,9 @@ import {Campaign} from './Campaign';
 export interface Statistic {
   id?: number;
   yearEdition: string;
-  compaign: Campaign;
+  compaign?: Campaign;
   attributes: StatisticAttribute[];
+  compaignId: number;
+  compaignTitle: string;
+
 }
