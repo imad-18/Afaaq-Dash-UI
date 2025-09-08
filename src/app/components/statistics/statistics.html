@@ -16,8 +16,43 @@
         <tbody>
             @for (stat of statistics; track stat.id) {
               <tr>
-                <td>{{ stat.compaignId }}</td>
-                <td>{{ stat.compaignTitle }}</td>
+                @if (stat.compaignTitle != null){
+                  <td>{{ stat.compaignId }}</td>
+                  <td>{{ stat.compaignTitle }}</td>
+                  <td>{{ stat.id }}</td>
+                  <td>{{ stat.yearEdition | date:'yyyy-MM-dd' }}</td>
+                  <td>
+                    <ul style="margin: 0; padding-left: 16px;">
+                      @for (attr of stat.attributes; track attr.id) {
+                        <li>{{ attr.attributeName }} : {{ attr.attributeValue }}</li>
+                      }
+                    </ul>
+                  </td>
+                }
+
+              </tr>
+            }
+        </tbody>
+      </nz-table>
+    </div>
+
+    <div style="margin-top: 30px;">
+      <nz-table [nzBordered]="true" [nzSize]="'small'" style="max-width: 90%" class="statistic-table">
+        <thead>
+        <tr>
+          <th>Activity ID</th>
+          <th>Activity Title</th>
+          <th>Statistic Id</th>
+          <th>Year Edition</th>
+          <th>Attributes</th>
+        </tr>
+        </thead>
+        <tbody>
+          @for (stat of statistics; track stat.id) {
+            <tr>
+              @if (stat.activityId != 0){
+                <td>{{ stat.activityId }}</td>
+                <td>{{ stat.activityTitle }}</td>
                 <td>{{ stat.id }}</td>
                 <td>{{ stat.yearEdition | date:'yyyy-MM-dd' }}</td>
                 <td>
@@ -27,8 +62,10 @@
                     }
                   </ul>
                 </td>
-              </tr>
-            }
+              }
+
+            </tr>
+          }
         </tbody>
       </nz-table>
     </div>
