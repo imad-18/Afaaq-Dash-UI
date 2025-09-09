@@ -191,10 +191,69 @@
     <nz-dropdown-menu #acitivitiesMenu="nzDropdownMenu">
       <ul nz-menu>
         @for (activity of activities; track activity.id){
-          <li nz-menu-item >{{activity.title}}</li>
+          <li nz-menu-item (click)="onSelectedItem(activity)">{{activity.title}}</li>
         }
       </ul>
     </nz-dropdown-menu>
+
+    @if (selectedItem) {
+      <div style="margin-top: 30px; display: flex; gap: 20px; align-items: flex-start">
+        <!--1st table: campaign table-->
+        <nz-table [nzBordered]="true" [nzSize]="'small'" style="max-width: 60%" class="statistic-table">
+          <thead>
+          <tr>
+            <th>Activity ID</th>
+            <th>Activity Title</th>
+            <th>Activity Description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>{{selectedItem.id}}</td>
+            <td>{{selectedItem.title}}</td>
+            <td>{{selectedItem.description}}</td>
+          </tr>
+          </tbody>
+        </nz-table>
+        <!--1st table: campaign table-->
+        <nz-table [nzBordered]="true" [nzSize]="'small'" style="max-width: 60%" class="statistic-table">
+          <thead>
+          <tr>
+            <th>Statistic ID</th>
+            <th>Edition year</th>
+            <th>Attributes</th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+            @for (activityStat of statistics; track activityStat.id) {
+              @if (activityStat.activityId == selectedItem.id) {
+                <tr>
+                  <td>{{ activityStat.id }}</td>
+                  <td>{{ activityStat.yearEdition | date:'yyyy-MM-dd'}} </td>
+                  <td>
+                    <ul style="margin: 0; padding-left: 16px;">
+                      @for (statAttributes of activityStat.attributes; track statAttributes.id) {
+                        <li>{{ statAttributes.attributeName}}: {{statAttributes.attributeValue}} </li>
+                      }
+                    </ul>
+                  </td>
+                  <td>
+                    <button nz-button nzType="default" nzDanger (click)="deleteStatistic(activityStat.id)" class="remove-stat-btn">
+                      Remove
+                    </button>
+                  </td>
+                </tr>
+              }
+            }
+          </tbody>
+        </nz-table>
+      </div>
+      <button nz-button nzType="primary" (click)="openStatisticForm()" class="ant-btn-primary">
+        {{hasStatistics? 'Add': 'Create'}} new statistic
+      </button>
+    }
+
   </nz-tab>
 </nz-tabs>
 
