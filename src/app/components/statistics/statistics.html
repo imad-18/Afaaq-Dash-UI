@@ -2,6 +2,7 @@
 <nz-tabs>
   <!--Tab 1-->
   <nz-tab nzTitle="Statistics">
+    <!--Campaign statistics table-->
     <div style="margin-top: 30px;">
       <nz-table [nzBordered]="true" [nzSize]="'small'" style="max-width: 90%" class="statistic-table">
         <thead>
@@ -36,6 +37,7 @@
       </nz-table>
     </div>
 
+    <!-- Activity statistics table-->
     <div style="margin-top: 30px;">
       <nz-table [nzBordered]="true" [nzSize]="'small'" style="max-width: 90%" class="statistic-table">
         <thead>
@@ -48,16 +50,16 @@
         </tr>
         </thead>
         <tbody>
-          @for (stat of statistics; track stat.id) {
+          @for (statActivity of statistics; track statActivity.id) {
             <tr>
-              @if (stat.activityId != 0){
-                <td>{{ stat.activityId }}</td>
-                <td>{{ stat.activityTitle }}</td>
-                <td>{{ stat.id }}</td>
-                <td>{{ stat.yearEdition | date:'yyyy-MM-dd' }}</td>
+              @if (statActivity.activityTitle != null){
+                <td>{{ statActivity.activityId }}</td>
+                <td>{{ statActivity.activityTitle }}</td>
+                <td>{{ statActivity.id }}</td>
+                <td>{{ statActivity.yearEdition | date:'yyyy-MM-dd' }}</td>
                 <td>
                   <ul style="margin: 0; padding-left: 16px;">
-                    @for (attr of stat.attributes; track attr.id) {
+                    @for (attr of statActivity.attributes; track attr.id) {
                       <li>{{ attr.attributeName }} : {{ attr.attributeValue }}</li>
                     }
                   </ul>
