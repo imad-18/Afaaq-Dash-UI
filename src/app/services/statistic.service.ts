@@ -16,7 +16,11 @@ export class StatisticService {
   }
 
   //create statistic
-  createStatisticFct(statistic: { yearEdition: any; compaign: { id: number }; attributes: any }) {
+  createStatisticFct(statistic: { yearEdition: any; attributes: any; compaign: { id: number } } | {
+    activity: { id: number };
+    yearEdition: any;
+    attributes: any
+  }) {
     return firstValueFrom(this.http.post<Statistic>("http://localhost:8080/statistics", statistic));
   }
 

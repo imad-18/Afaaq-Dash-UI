@@ -104,34 +104,30 @@ export class Statistics implements OnInit {
   }
 
   // ✅ Handle form submission
-  onSubmit(): void {
+  onSubmit(formType: 'campaign' | 'activity'): void {
     if (this.statisticForm.valid && this.selectedItem) {
-      const payload = {
+      const base = {
         yearEdition: this.statisticForm.value.yearEdition,
-        compaign: { id: this.selectedItem.id },  // link to campaign
         attributes: this.statisticForm.value.attributes
       };
 
-      //console.log('Payload to backend:', payload);
+      const payload =
+        formType === 'campaign'
+          ? { ...base, compaign: { id: this.selectedItem.id } }
+          : { ...base, activity: { id: this.selectedItem.id } };
 
       this.statisticService.createStatisticFct(payload)
         .then((res) => {
-          //console.log('Statistic saved successfully:', res);
-
-          // update local list immediately
           this.addStatisticToList(res);
-
-          // reset or hide form
           this.isVisible = false;
           this.statisticForm.reset();
           this.attributes.clear();
         })
-        .catch((err) => {
-          console.error('Error saving statistic:', err);
-        });
-
+        .catch((err) => console.error('Error saving statistic:', err));
     }
   }
+
+
 
   cancelStatisticForm() {
     this.isVisible = false;
@@ -146,10 +142,18 @@ export class Statistics implements OnInit {
 
   /*update the stat tables (in tabs 1 & 2) without refresh*/
   addStatisticToList(newStat: Statistic) {
-    //Since I already know the campaign (from selectedItem),
-    // I can manually inject 'compaignId' and 'compaignTitle':
-    newStat.compaignId = this.selectedItem.id;
-    newStat.compaignTitle = this.selectedItem.title;
+    //Since I already know the campaign/activity (from selectedItem),
+    //I can manually inject 'compaignId/activityId' and 'compaignTitle/activityTitle':
+    //Check wheither the seleced item corresponds to a campaign or activity
+    if (this.campaigns.some(c => c.title === this.selectedItem.title)) {
+      newStat.compaignId = this.selectedItem.id;
+      newStat.compaignTitle = this.selectedItem.title;
+    }else{
+      newStat.activityId = this.selectedItem.id;
+      newStat.activityTitle = this.selectedItem.title;
+    }
+
+    //console.log(newStat);
 
     this.statistics = [...this.statistics, newStat];
   }

@@ -154,7 +154,7 @@
       <!-- Case 1: Show -the same- dynamic form weither a previous stat exists or not -->
       @if (isVisible){
         <div style="margin-top: 20px;">
-          <form [formGroup]="statisticForm" (ngSubmit)="onSubmit()">
+          <form [formGroup]="statisticForm" (ngSubmit)="onSubmit('campaign')">
 
             <input type="date" formControlName="yearEdition" class="editionDate-input"/>
 
@@ -187,7 +187,7 @@
       Select Activity
       <nz-icon nzType="down"></nz-icon>
     </button>
-    <!-- 2-b) Display the campaigns/activities titles-->
+    <!-- a: Display the activities titles-->
     <nz-dropdown-menu #acitivitiesMenu="nzDropdownMenu">
       <ul nz-menu>
         @for (activity of activities; track activity.id){
@@ -196,9 +196,10 @@
       </ul>
     </nz-dropdown-menu>
 
+    <!-- b: Display data of the selected activity-->
     @if (selectedItem) {
       <div style="margin-top: 30px; display: flex; gap: 20px; align-items: flex-start">
-        <!--1st table: campaign table-->
+        <!--1st table: activity table-->
         <nz-table [nzBordered]="true" [nzSize]="'small'" style="max-width: 60%" class="statistic-table">
           <thead>
           <tr>
@@ -215,7 +216,7 @@
           </tr>
           </tbody>
         </nz-table>
-        <!--1st table: campaign table-->
+        <!--2nd table: activity's stats table-->
         <nz-table [nzBordered]="true" [nzSize]="'small'" style="max-width: 60%" class="statistic-table">
           <thead>
           <tr>
@@ -249,9 +250,38 @@
           </tbody>
         </nz-table>
       </div>
+
+      <!--c: create stat btn-->
       <button nz-button nzType="primary" (click)="openStatisticForm()" class="ant-btn-primary">
         {{hasStatistics? 'Add': 'Create'}} new statistic
       </button>
+
+      <!-- d: Show -the same- dynamic form weither a previous stat exists or not -->
+      @if (isVisible){
+        <div style="margin-top: 20px;">
+          <form [formGroup]="statisticForm" (ngSubmit)="onSubmit('activity')">
+
+            <input type="date" formControlName="yearEdition" class="editionDate-input"/>
+
+            <div formArrayName="attributes">
+              @for (attr of attributes.controls; track $index) {
+                <div [formGroupName]="$index" class="attribute-row">
+                  <input nz-input placeholder="Attribute Name" formControlName="attributeName"/>
+                  <input nz-input placeholder="Attribute Value" formControlName="attributeValue"/>
+                  <button nz-button nzType="default" (click)="removeAttribute($index)" type="button">Remove</button>
+                </div>
+              }
+            </div>
+
+            <button nz-button nzType="dashed" (click)="addAttribute()" type="button" style="margin-top: 10px;">+ Add Attribute</button>
+
+            <div style="margin-top: 15px;">
+              <button nz-button nzType="primary" htmlType="submit">Save Statistic</button>
+              <button nz-button nzType="default" type="button" (click)="cancelStatisticForm()" style="margin-left: 20px">Cancel</button>
+            </div>
+          </form>
+        </div>
+      }
     }
 
   </nz-tab>
