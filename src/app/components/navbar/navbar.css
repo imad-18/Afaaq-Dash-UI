@@ -26,12 +26,17 @@
 }
 
 nz-header {
-  background: #fff;
-  padding: 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000; /* keep it above content */
+  background: #fff; /* or dark if you prefer */
+  padding: 0 16px;
 }
 
 nz-content {
   margin: 24px 16px 0;
+  flex: 1; /* take remaining space */
+  overflow: hidden; /* prevent double scroll */
 }
 
 .inner-content {
