@@ -23,7 +23,7 @@ import {CreateUpdateActivity} from '../shared/create-update-activity/create-upda
     CreateUpdateActivity
   ],
   templateUrl: './activities.html',
-  styleUrl: './activities.css'
+  styleUrls: ['./activities.css', '../statistics/statistics.css']
 })
 export class Activities implements OnInit {
 

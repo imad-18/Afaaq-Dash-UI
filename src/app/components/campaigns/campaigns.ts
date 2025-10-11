@@ -23,7 +23,7 @@ import {CreateCampaign} from '../shared/create-campaign/create-campaign';
     CreateCampaign
   ],
   templateUrl: './campaigns.html',
-  styleUrl: './campaigns.css'
+  styleUrls: ['./campaigns.css', '../statistics/statistics.css']
 })
 export class Campaigns implements OnInit {
 

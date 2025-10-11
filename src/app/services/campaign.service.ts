@@ -2,7 +2,7 @@ import {inject, Injectable} from '@angular/core';
 import {Campaign} from '../models/Campaign';
 import {Campaigns} from '../components/campaigns/campaigns';
 import {HttpClient} from '@angular/common/http';
-import {firstValueFrom} from 'rxjs';
+import {firstValueFrom, Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -30,5 +30,13 @@ export class CampaignService {
   createCampaignFct(campaign: Campaign) {
     return firstValueFrom(this.http.post<Campaign>("http://localhost:8080/campaigns", campaign));
   }
+
+  // file-upload.service.ts
+  uploadFile(file: File, compaignId: number): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.http.post(`http://localhost:8080/api/files/upload/${compaignId}`, formData);
+  }
+
 
 }

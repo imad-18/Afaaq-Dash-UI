@@ -32,8 +32,8 @@
 
   <!-- Images Path -->
   <nz-form-item>
-    <nz-form-label [nzSpan]="6" nzFor="imagesPath">Images (comma-separated)</nz-form-label>
-    <nz-form-control [nzSpan]="14">
+    <nz-form-label [nzSpan]="6" nzFor="imagesPath">Images</nz-form-label>
+    <!--<nz-form-control [nzSpan]="14">
       <input
         nz-input
         id="imagesPath"
@@ -41,6 +41,29 @@
         [(ngModel)]="imagesInput"
         placeholder="e.g. assets/images/img1.jpg, assets/images/img2.jpg"
       />
+    </nz-form-control>-->
+    <nz-form-control [nzSpan]="14">
+      <nz-upload
+        class="upload-list-inline"
+        nzAction="http://localhost:8080/api/files/upload"
+        nzListType="picture"
+        [(nzFileList)]="fileList2"
+        [nzRemove]="handleRemove"
+        (nzChange)="handleUploadChange($event)"
+        nzMultiple="true"
+        [nzShowUploadList]="{ showPreviewIcon: true, showRemoveIcon: true }">
+        <!-- CRITICAL: type="button" prevents form submission -->
+        <button nz-button type="button">
+          <span nz-icon nzType="upload"></span>
+          Upload Images
+        </button>
+      </nz-upload>
+      @if (formCampaign.imagesPath.length){
+        <div class="upload-hint">
+          <span nz-icon nzType="check-circle" nzTheme="fill" style="color: #52c41a;"></span>
+          {{ formCampaign.imagesPath.length }} image(s) uploaded
+        </div>
+      }
     </nz-form-control>
   </nz-form-item>
 
