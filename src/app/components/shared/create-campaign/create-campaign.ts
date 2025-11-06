@@ -25,8 +25,8 @@ import {NzIconDirective} from 'ng-zorro-antd/icon';
   templateUrl: './create-campaign.html',
   styleUrl: './create-campaign.css'
 })
-export class CreateCampaign implements OnChanges{
-  @Input() campaign: Campaign | null = null; // null = create mode
+export class CreateCampaign implements OnChanges {
+  @Input() campaign: Campaign | null = null;
   @Output() close = new EventEmitter<void>();
   @Output() created = new EventEmitter<Campaign>();
   @Output() updated = new EventEmitter<Campaign>();
@@ -38,129 +38,80 @@ export class CreateCampaign implements OnChanges{
     imagesPath: []
   };
 
-  imagesInput: string = '';
   fileList2: NzUploadFile[] = [];
 
-  //Service injection
-  constructor(private campaignService: CampaignService,
-              private message: NzMessageService
+  constructor(
+    private campaignService: CampaignService,
+    private message: NzMessageService
   ) {}
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['campaign'] && this.campaign) {
-      // Fill form when campaign is provided for update
+      // Edit mode
       this.formCampaign = { ...this.campaign };
-
-      // Initialize fileList2 with existing images for edit mode
       this.fileList2 = this.campaign.imagesPath.map((path, index) => ({
         uid: `${index}`,
         name: path.split('/').pop() || `image-${index}`,
         status: 'done',
-        url: `http://localhost:8080${path}`,
-        response: { filePath: path } // Store original path
-      } as NzUploadFile));
+        url: `http://localhost:8080${path}`
+      }));
     } else if (changes['campaign'] && !this.campaign) {
-      // Reset form for create mode
+      // Create mode
       this.formCampaign = { id: 0, title: '', description: '', imagesPath: [] };
-      this.imagesInput = '';
-      this.fileList2 = []; // Clear file list
+      this.fileList2 = [];
     }
   }
 
-  handleUploadChange(info: NzUploadChangeParam): void {
-    console.log('Upload change:', info); // Debug log
-
-    const fileList = [...info.fileList];
-
-    // Update file list
-    this.fileList2 = fileList;
-
-    // Extract uploaded file paths from successful uploads
-    const uploadedPaths = fileList
-      .filter(file => file.status === 'done' && file.response?.filePath)
-      .map(file => file.response.filePath);
-
-    // Keep existing paths and add new ones
-    const existingPaths = this.formCampaign.imagesPath.filter(path =>
-      fileList.some(file =>
-        (file.response?.filePath === path) ||
-        (file.url && file.url.includes(path))
-      )
-    );
-
-    // Merge and remove duplicates
-    this.formCampaign.imagesPath = [...new Set([...existingPaths, ...uploadedPaths])];
-
-    console.log('Updated imagesPath:', this.formCampaign.imagesPath); // Debug log
-
-    // Handle upload status messages
-    if (info.file.status === 'done') {
-      this.message.success(`${info.file.name} uploaded successfully`);
-    } else if (info.file.status === 'error') {
-      this.message.error(`${info.file.name} upload failed.`);
-      console.error('Upload error:', info.file.error);
-    }
-  }
-
-  // Handle file removal
-  handleRemove = (file: NzUploadFile): boolean => {
-    console.log('Removing file:', file); // Debug log
-
-    // Get the file path from response or URL
-    let filePath = file.response?.filePath;
-
-    if (!filePath && file.url) {
-      // Extract path from URL (e.g., http://localhost:8080/uploads/images/xxx.jpg -> /uploads/images/xxx.jpg)
-      const urlObj = new URL(file.url);
-      filePath = urlObj.pathname;
-    }
-
-    if (filePath) {
-      this.formCampaign.imagesPath = this.formCampaign.imagesPath.filter(
-        path => path !== filePath
-      );
-      console.log('Updated imagesPath after removal:', this.formCampaign.imagesPath);
-    }
-
-    return true;
+  /**
+   * Called before upload — return false to prevent auto-upload
+   */
+  beforeUpload = (file: NzUploadFile): boolean => {
+    this.fileList2 = [file]; // only one image allowed
+    return false; // ❌ prevents auto-upload
   };
 
+  /**
+   * Manual submit logic
+   */
   async onSubmit() {
-    // Convert comma-separated input into array
-    /*if (this.imagesInput.trim()) {
-      this.formCampaign.imagesPath = this.imagesInput.split(',').map(img => img.trim());
-    }*/
-
-    // Validate that at least one image is uploaded (optional)
-    if (this.formCampaign.imagesPath.length === 0) {
-      this.message.warning('Please upload at least one image');
+    if (this.fileList2.length === 0) {
+      this.message.warning('Please select an image before submitting');
       return;
     }
 
-    // create-update-campaign
     try {
-      if (this.campaign){
-        // UPDATE Mode
-        const updatedCampaign = await this.campaignService.updateCampaignFct(this.formCampaign);
-        this.updated.emit(updatedCampaign);
+      // 1️⃣ Upload image manually first
+      const file = this.fileList2[0] as any; // the selected file
+      const uploadResponse = await this.campaignService.uploadFile(file as File).toPromise();
+
+      if (!uploadResponse?.fileUrl) {
+        this.message.error('Image upload failed');
+        return;
+      }
+
+      // 2️⃣ Update formCampaign with image URL from backend
+      this.formCampaign.imagesPath = [uploadResponse.fileUrl];
+
+      // 3️⃣ Create or update campaign
+      if (this.campaign) {
+        const updated = await this.campaignService.updateCampaignFct(this.formCampaign);
+        console.log("updated success... "+updated);
+        this.updated.emit(updated);
         this.message.success('Campaign updated successfully');
-      }else {
-        // CREATE Mode
-        const createdCampaign = await this.campaignService.createCampaignFct(this.formCampaign);
-        this.created.emit(createdCampaign); // ✅ Tell parent to add this new campaign
+      } else {
+        const created = await this.campaignService.createCampaignFct(this.formCampaign);
+        this.created.emit(created);
         this.message.success('Campaign created successfully');
       }
-      this.close.emit(); // Close form on submit 4 both modes
 
+      this.close.emit();
     } catch (error) {
-      console.error('Error saving campaign:', error);
+      console.error('Error during submission:', error);
       this.message.error('Failed to save campaign');
     }
   }
 
-
-  // handle cancel form
   onCancel() {
-    this.close.emit(); // just tell parent to close
+    this.close.emit();
   }
 }
