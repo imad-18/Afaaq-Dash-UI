@@ -19,3 +19,14 @@ button{
 :host ::ng-deep .upload-list-inline .ant-upload-animate-leave {
   animation-name: uploadAnimateInlineOut;
 }
+
+nz-form-item {
+  display: flex;
+  justify-content: center;
+}
+nz-form-label {
+  text-align: left;
+  font-family: 'Faculty', sans-serif !important;
+  font-size: 14px;
+  font-weight: normal;
+}

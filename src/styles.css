@@ -1,1 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
+@font-face {
+  font-family: 'Arimo';
+  src: url('assets/fonts/static/Arimo-SemiBold.ttf') format('truetype');
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: 'Faculty';
+  src: url('assets/fonts/FacultyGlyphic-Regular.ttf') format('truetype');
+}

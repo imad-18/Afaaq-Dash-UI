@@ -10,8 +10,16 @@
   justify-content: center;
 }
 .logo img{
-  margin-top: 70px;
-  width: 100px;
+  margin-top: 20px;
+  width: 60px;
+}
+
+hr{
+  border: 0;
+  height: 1px;
+  background: #333;
+  background-image: linear-gradient(to right, #ccc, #333, #ccc);
+  margin: 40px 20px 0 20px;
 }
 
 .myProfile{
@@ -29,8 +37,11 @@ nz-header {
   position: sticky;
   top: 0;
   z-index: 1000; /* keep it above content */
-  background: #fff; /* or dark if you prefer */
+  background: #fff; /* or dark if you prefer| #A1C4E3 */
+  /*background-image: linear-gradient(to right, #001529, #A1C4E3);*/
   padding: 0 16px;
+  /*margin: 4px 15px 0 15px;
+  border-radius: 5px;*/
 }
 
 nz-content {
@@ -50,7 +61,7 @@ nz-footer {
 }
 
 .navItems{
-  margin-top: 100px;
+  margin-top: 50px;
 }
 /*--------*/
 .layout {
@@ -64,6 +75,7 @@ nz-footer {
   bottom: 0;
   height: 100vh;
   z-index: 1000;
+  /*background-image: linear-gradient(to bottom, #001529, #A1C4E3);*/
 }
 
 .main-layout {
@@ -78,3 +90,4 @@ nz-footer {
   overflow-y: auto; /* scroll only content */
   flex: 1;          /* take remaining space */
 }
+
