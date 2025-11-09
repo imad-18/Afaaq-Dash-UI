@@ -1,5 +1,7 @@
-<app-navbar></app-navbar>
-
-
-
-<!--<app-footer></app-footer>-->
+@if (isAuthRoute) {
+  <!-- AuthService routes (full page) -->
+  <router-outlet></router-outlet>
+} @else {
+  <!-- Normal app layout with sidebar + header + router-outlet inside navbar -->
+  <app-navbar></app-navbar>
+}

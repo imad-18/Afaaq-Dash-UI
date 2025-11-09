@@ -3,8 +3,13 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'campaigns',
+    redirectTo: 'signin',
     pathMatch: 'full'
+  },
+  {
+    path: 'signin',
+    loadComponent: () => import('./components/auth/auth')
+      .then(m => m.Auth)
   },
   {
     path: 'campaigns',
